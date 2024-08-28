@@ -29,7 +29,7 @@ export async function ensureLoggedInUser() {
 //console.log(pb.authStore.token);
 //console.log(pb.authStore.model.id);
 export function getUserId() {
-    return pb.authStore.model.id;
+    return pb.authStore?.model?.id;
 }
 
 export async function createGame(d, s, ls) {
@@ -71,6 +71,13 @@ export async function joinGame(code, name) {
         game_user: await pb.collection('game_users').create(data)
     }
     return retur;
+}
+
+export async function spectateGame(code) {
+    const record = await pb.collection('games').getFirstListItem(`code="${code}"`, {
+    });
+    console.log(record)
+    return {game:record};
 }
 
 export async function kickUser(gameUserId) {
