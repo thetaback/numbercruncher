@@ -63,9 +63,9 @@ export async function joinGame(code, name) {
     console.log(record)
     const data = {
         "user": pb.authStore.model.id,
-        "game": record.id, 
+        "game": record.id,
+        "name": name
     }
-    await pb.collection('users').update(data.user, {name});
     const retur = {
         game: record,
         game_user: await pb.collection('game_users').create(data)
