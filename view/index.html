@@ -11,16 +11,23 @@
 <body>
     <div class="container">
     <div class="row">
-      <div class="col-9">
+      <div class="col-6">
         <h1 class="mt-3 text-light">Scoreboard</h1>
       </div>
-      <div class="col-3">
+      <div class="col-6">
           <div class="d-none" id="codebuttonhide">
-            <button class="btn btn-primary m-3" type="button" data-bs-toggle="collapse" 
-                               data-bs-target="#showcode" aria-expanded="true" 
-                               aria-controls="showcode">
+            <button class="btn btn-primary m-3 d-inline-block" type="button" 
+                               data-bs-toggle="collapse" data-bs-target="#showcode" 
+                               aria-expanded="true" aria-controls="showcode">
               Toggle Code
             </button>
+
+            <div class="form-check form-switch d-inline-block">
+                <input class="form-check-input" type="checkbox" id="opengame" checked="">
+                <label class="form-check-label" for="opengame">
+                    Players can join
+                </label>
+            </div>
           </div>
       </div>
       <div class="col-12 collapse show text-center" id="showcode">
@@ -44,7 +51,7 @@
     </div>
     <script type="module" src="../ncclient.mjs"></script>
     <script type="module">
-        import {getUserId, getScoreboard, subscribeToUpdate, kickUser} from '../ncclient.mjs';
+        import {getUserId, getScoreboard, subscribeToUpdate, kickUser, setGameStatus, getGameStatus} from '../ncclient.mjs';
         // add a handler for the case when sessionStorage.currentGame = null
         const currentGame = JSON.parse(sessionStorage.currentGame);
         const levelseq = currentGame.levelseq.split(" ");
@@ -58,9 +65,20 @@
             document.getElementById("codebuttonhide").className = "d-show float-end";
             document.getElementById("codehide").className = "d-show";
             showkickbutton = true; 
+            async function toggleGame(event) {
+                if (event.target.checked) {
+                    setGameStatus(recordID, "true")
+                } else {
+                    setGameStatus(recordID, "false")
+                }
+            }
+            const opengame = document.getElementById("opengame")
+            opengame.onchange = toggleGame; 
+            opengame.checked = (await getGameStatus(recordID)).open
         }
 
         document.getElementById("code").innerHTML = currentGame.code;
+        
 
         async function updateScoreboard() {
             const cr = await getScoreboard(recordID);

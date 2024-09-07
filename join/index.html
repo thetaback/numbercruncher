@@ -63,7 +63,7 @@
             return
           }
           if (er.status == 400) {
-            failureAlert({message: "You have already joined this game once."}, "submitalert");
+            failureAlert({message: "This game is closed or you have already joined it."}, "submitalert");
             return
           }
           console.log("Failed to join game.", er);

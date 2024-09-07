@@ -43,7 +43,8 @@ export async function createGame(d, s, ls) {
             "difficulty": d,
             "seed": s,
             "code": formattedcode,
-            "levelseq": ls
+            "levelseq": ls,
+            "open": "true"
         };
 
         try {
@@ -78,6 +79,14 @@ export async function spectateGame(code) {
     });
     console.log(record)
     return {game:record};
+}
+
+export async function setGameStatus(gameId, status) {
+    return pb.collection('games').update(gameId, {open:status})
+}
+
+export async function getGameStatus(gameId) {
+    return pb.collection('games').getOne(gameId)
 }
 
 export async function kickUser(gameUserId) {
