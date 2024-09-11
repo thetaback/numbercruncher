@@ -87,6 +87,7 @@
             let fin = "";
             let inp = "";
             let place = 1;
+            const medals = ["", "🥇", "🥈", "🥉"];
             for (let r of cr) {
               let kickbutton = "";
               if (showkickbutton) {
@@ -96,13 +97,13 @@
               if (r.time) {
                 if (r.userid == getUserId()) {
                     fin += 
-                     `<tr><td class="table-light text-center">${place}</td>` +
+                     `<tr><td class="table-light text-center">${medals[place] || ""} ${place}</td>` +
                      `<td class="table-light">${r.name} ${kickbutton}</td>` +
                      `<td class="table-light" style="vertical-align:middle">${completedbar}</td>` +
                      `<td class="table-light text-end">${r.time?.toFixed(1)} seconds</td></tr>`;
                 } else {
                     fin += 
-                     `<tr><td class="table-default text-center">${place}</td>` +
+                     `<tr><td class="table-default text-center">${medals[place] || ""} ${place}</td>` +
                      `<td class="table-default">${r.name} ${kickbutton}</td>` +
                      `<td class="table-default" style="vertical-align:middle">${completedbar}</td>` +
                      `<td class="table-default text-end">${r.time?.toFixed(1)} seconds</td></tr>`;
