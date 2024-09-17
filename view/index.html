@@ -12,6 +12,16 @@
 	<link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.e14c2b227c.png">
 	<link rel="icon" type="image/png" sizes="48x48" href="../images/favicon-48x48.e14c2b227c.png">
 	<link rel="icon" type="image/png" sizes="64x64" href="../images/favicon-64x64.e14c2b227c.png">
+    <style>
+      .fireworks-container {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        z-index: 100;
+      }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -57,14 +67,24 @@
           Designed and developed by Theta Back, 2024. <a href="../about/">More info</a>
         </footer>
     </div>
+      <div class="fireworks-container"
+        style="background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"></div>
     <script type="module" src="../ncclient.mjs"></script>
     <script type="module">
         import {getUserId, getScoreboard, subscribeToUpdate, kickUser, setGameStatus, getGameStatus} from '../ncclient.mjs';
+        import { Fireworks } from '../node_modules/fireworks-js/dist/index.es.js';
+        function fireburst(seconds) {
+            const fireworks = new Fireworks(document.querySelector(".fireworks-container"), { /* options */ })
+            fireworks.start();
+            setTimeout(function () {fireworks.waitStop(true)}, seconds*1000);
+        }
+
         // add a handler for the case when sessionStorage.currentGame = null
         const currentGame = JSON.parse(sessionStorage.currentGame);
         const levelseq = currentGame.levelseq.split(" ");
         const recordID = currentGame.id; 
         const sc = document.getElementById("scoreboard1");
+        let firebool = false;
 
         const completedbar = "<div class='progress'><div class='progress-bar bg-success' style='width:100%'></div></div>";
         let showkickbutton = false;
@@ -109,6 +129,10 @@
                      `<td class="table-light">${r.name} ${kickbutton}</td>` +
                      `<td class="table-light" style="vertical-align:middle">${completedbar}</td>` +
                      `<td class="table-light text-end">${r.time?.toFixed(1)} seconds</td></tr>`;
+                     if (!firebool) {
+                        fireburst(3);
+                        firebool = true;
+                     }
                 } else {
                     fin += 
                      `<tr><td class="table-default text-center">${medals[place] || ""} ${place}</td>` +

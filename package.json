@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "eventsource": "^2.0.2",
+    "fireworks-js": "^2.10.8",
     "node-localstorage": "^3.0.5",
     "pocketbase": "^0.21.3"
   }
