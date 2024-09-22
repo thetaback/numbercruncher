@@ -20,6 +20,7 @@
         height: 100%;
         position: fixed;
         z-index: 100;
+        pointer-events:none;
       }
     </style>
 </head>
@@ -110,7 +111,6 @@
 
         async function updateScoreboard() {
             const cr = await getScoreboard(recordID);
-            console.log(cr);
             const kickmap = {};
             let fin = "";
             let inp = "";
@@ -163,7 +163,6 @@
         }
         updateScoreboard();
         const cr = await subscribeToUpdate(recordID, updateScoreboard);
-        console.log(`waiting for updates ...`);
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
